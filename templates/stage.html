@@ -1,0 +1,87 @@
+	<div class="deck" id="one"><div id="reward1" class="reward"></div><img id="pic1" class="item"/></div>
+	<div class="deck" id="two"><div id="reward2" class="reward"></div><img id="pic2" class="item"/></div>
+	<div id="middleBox"><img id="memoryPicture"/><p id="memoryQuestion"></p><p id="computer"></p></div>
+<!-- 	<div id="instructionBox"><span id="instruction">What did the computer choose? Press "i" for indoor, "o" for outdoor.</span></div> -->
+	
+	<style type="text/css">
+		div.deck {
+			display: inline-block;
+			position: absolute;
+			height: 400px;
+			width: 20%;
+			margin-top: 100px;
+			padding-top: 100px;
+			text-align: center;
+			font-size: 2.5em;
+		}
+		
+		img.item {
+			max-height: 300px;
+			max-width: 100%;
+			border: 10px solid #FFFF66;
+		}
+		
+		img#memoryPicture {
+			max-height: 300px;
+			max-width: 300px;
+		}
+		
+		p#memoryQuestion {
+			font-size: .25em;
+		}
+		
+		div#one {
+			margin-left: 15%;
+		}
+		
+		div#two {
+			margin-left: 65%;
+		}
+
+		div#middleBox {
+			position: absolute;
+			display: inline-block;
+			margin-left: 40%;
+			font-size: 2em;
+			color: gray;
+			height: 400px;
+			width: 20%;
+			margin-top: 200px;
+			text-align: center;
+		}
+		
+		.reward {
+			position: absolute;
+			margin-top: -100px;
+			width: 100%;
+			font-size: 1.5em; 
+			color: green;
+			background-color: white;
+			border-radius: 20px;
+		}
+
+		#computer {
+			font-size: 0.9em; 
+			color: gray;
+			background-color: white;
+			border: 10px;
+			border-radius: 20px;
+			box-shadow: 10px;
+		}
+		
+		div#instructionBox {
+			position: absolute;
+			width: 100%;
+			text-align: center;
+			margin-top: 550px;
+			font-size: 2em;
+			color: gray;
+		}
+		
+		span#instruction {
+			background-color: white;
+			padding: 10px;
+			border-radius: 20px;
+		}
+
+	</style>
