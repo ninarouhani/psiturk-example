@@ -2,7 +2,7 @@
 * PHASE 1  *
 ************/
 
-var learningTask = function() {
+learningTask = function() {
 
 	var startTime; // time of presentation for RT calculations
 
@@ -16,8 +16,6 @@ var learningTask = function() {
 			item2pic = outdoorPictures[learningTrialTotalCount];
 			$("#pic1").attr("src", "static/images/" + item1pic);
 			$("#pic2").attr("src", "static/images/" + item2pic);
-			console.log(item1pic);
-			console.log(item2pic);
 		}
 
 		// 1 is outdoor, 2 is indoor
@@ -26,8 +24,6 @@ var learningTask = function() {
 			item2pic = indoorPictures[learningTrialTotalCount];
 			$("#pic1").attr("src", "static/images/" + item1pic);
 			$("#pic2").attr("src", "static/images/" + item2pic);
-			console.log(item1pic);
-			console.log(item2pic);
 		}
 	}
 
@@ -65,7 +61,7 @@ var learningTask = function() {
 		if (!firstListening) return;
 	
 		var keyCode = key.keyCode;
-		var response, reward, picture, unchosen; // later used for psiTurk
+		var response, reward, chosen, unchosen; // later used for psiTurk
 	
 		switch (keyCode) {
 		// "1"
@@ -83,12 +79,12 @@ var learningTask = function() {
 			window.clearTimeout(timeoutID);
 			
 			// save items for future reference
-			var card = new Card(reward, picture, unchosen);
+			var card = new Card(reward, chosen, unchosen);
 			cards[learningTrialTotalCount] = card;
-			
+
 			// hide cards
 			hideCard(locationOrder[learningTrialTotalCount]);
-			$("#reward").hide();
+			$(".reward").hide();
 			hideCard(1);
 			hideCard(2);
 			
@@ -124,41 +120,39 @@ var learningTask = function() {
 		}
 	}
 
-	var next = function () {
+	next = function () {
 		setTimeout(function() {
 
 			// show correct card
 			if (computerPick[learningTrialTotalCount] == 1) {
+				$("#reward1").show();
 				hideCard(2);
 				chosen = item1pic;
 				unchosen = item2pic;
-				console.log(chosen);
 			}
 			else {
+				$("#reward2").show();
 				hideCard(1);
 				chosen = item2pic; 
 				unchosen = item1pic;
-				console.log(chosen);
 			}
 
 			if (rewardOrder[learningTrialTotalCount] == 1) {
 				reward = rewardSequenceIndoor[indoorCount];
 				indoorCount++;
-				console.log(reward);
 			}
 			else {
 				reward = rewardSequenceOutdoor[outdoorCount];
 				outdoorCount++;
-				console.log(reward);
 			}
 		
-			var card = new Card(reward, chosen, unchosen);
+			card = new Card(reward, chosen, unchosen);
 			cards[learningTrialTotalCount] = card;
+			console.log(Card);
 
 			// show reward
-			$("#reward").text(reward);
-			$("#reward").show();
-		
+			$(".reward").text("$" + reward);
+
 			// ***insert psiTurk syntax around here***
 			
 			// new RT
@@ -187,22 +181,22 @@ var learningTask = function() {
 		hideCard(1);
 		hideCard(2);
 		// $("#computer").hide();
-		$("#reward").hide();
+		$(".reward").hide();
 		// set background to white
 		$("body").css('background-color', "white");
 		$("body").css('background-image', "");
 		// stop accepting key presses
 		$("body").unbind("keydown", responseHandler);
 		// initiate second task
-		// memoryTask();
+		memoryTask();
 	}
 	
 	// separate constant to allow variability (accessible properties for later use)
 	var totalRooms = 2;
 	var totalTrials = 32;
 	var trialsPerRoom = totalTrials / totalRooms;
-	var hideTime = 1000; // (ms)
-	var showTime = 1000;
+	var hideTime = 10; // (ms)
+	var showTime = 10;
 	var timeLimit = 6000;
 
 	// sample rooms
@@ -247,12 +241,13 @@ var learningTask = function() {
 		locationChance = randomLocation();
 		sequenceChance = randomSequence();
 		$("body").hide();
+		$(".reward").hide();
 	}
 	
 	showPage();
 	
 	// hide cards
-	$("#reward").hide();
+
 	
 	ready(); // start task
 	

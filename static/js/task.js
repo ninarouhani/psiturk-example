@@ -60,9 +60,9 @@ var rewardOrder = [0,1,0,1,0,0,1,1,0,1,1,0,0,1,0,1,0,1,1,0,0,1,1,0,1,0,1,0,0,1,0
 var computerPick = [0,1,1,1,1,0,0,0,0,1,0,0,1,0,0,0,0,1,0,1,0,0,1,0,0,1,1,1,0,1,1,0,];
 
 // card object to store UX
-function Card(reward, picture, unchosen) {
+function Card(reward, chosen, unchosen) {
 	this.reward = reward;
-	this.picture = picture;
+	this.chosen = chosen;
 	this.unchosen = unchosen;
 }
 
@@ -192,7 +192,7 @@ var practiceTask = function() {
 				practiceoutdoorCount++;
 			}
 
-			$(".reward").text(reward);
+			$(".reward").text("$" + reward);
 		
 			// ***insert psiTurk syntax around here***
 			
@@ -227,8 +227,8 @@ var practiceTask = function() {
 	
 	// separate constant to allow variability (accessible properties for later use)
 	var practicetotalTrials = 10 ;
-	var hideTime = 1000; // (ms)
-	var showTime = 1000;
+	var hideTime = 10; // (ms)
+	var showTime = 10;
 	var timeLimit = 3000;
 
 	// initialize counters

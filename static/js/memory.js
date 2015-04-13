@@ -2,20 +2,25 @@
 * PHASE 2  *
 ************/
 
-// assuming indoor/outdoor are sampled from equally...
-// var oldIndoor = indoorPictures.slice(0, (learningTask.totalTrials / 2));
-var newIndoor = indoorPictures.slice(learningTask.totalTrials / 2);
-// var oldOutdoor = outdoorPictures.slice(0, (learningTask.totalTrials / 2));
-var newOutdoor = outdoorPictures.slice(learningTask.totalTrials / 2);
+memoryTask = function() {
+	
+	// assuming indoor/outdoor are sampled from equally...
+	// var oldIndoor = indoorPictures.slice(0, (learningTask.totalTrials / 2));
+	var newIndoor = indoorPictures.slice(33);
+	// var oldOutdoor = outdoorPictures.slice(0, (learningTask.totalTrials / 2));
+	var newOutdoor = outdoorPictures.slice(33);
 
-var chosen = []; // computer chosen
-var unchosen = []; // computer not chosen (but shown)
-var foils = newIndoor.concat(newOutdoor); // participant has never seen
+	var chosen = []; // computer chosen
+	var unchosen = []; // computer not chosen (but shown)
+	var foils = newIndoor.concat(newOutdoor); // participant has never seen
+	console.log(chosen);
+	console.log(unchosen); 
+	console.log(foils);
+
 
 var timeLimit = 3000;
 
-var memoryTask = function() {
-	
+	console.log(cards);
 	// keep track of how many shown in block
 	var chosenCount = 0;
 	var unchosenCount = 0;
