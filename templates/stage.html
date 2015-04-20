@@ -1,14 +1,12 @@
 	<div class="deck" id="one"><div id="reward1" class="reward"></div><img id="pic1" class="item"/></div>
 	<div class="deck" id="two"><div id="reward2" class="reward"></div><img id="pic2" class="item"/></div>
 	<div id="middleBox"><img id="memoryPicture"/><p id="memoryQuestion"></p><p id="computer"></p></div>
-<!-- 	<div id="instructionBox"><span id="instruction">What did the computer choose? Press "i" for indoor, "o" for outdoor.</span></div> -->
 	
 	<style type="text/css">
 		div.deck {
 			display: inline-block;
 			position: absolute;
 			height: 400px;
-			width: 20%;
 			margin-top: 100px;
 			padding-top: 100px;
 			text-align: center;
@@ -24,10 +22,12 @@
 		img#memoryPicture {
 			max-height: 300px;
 			max-width: 300px;
+			text-align: center;
 		}
 		
 		p#memoryQuestion {
-			font-size: .25em;
+			font-size: 0.75em;
+			text-align: center;
 		}
 		
 		div#one {
@@ -42,10 +42,10 @@
 			position: absolute;
 			display: inline-block;
 			margin-left: 40%;
+			margin-right: 40%;
 			font-size: 2em;
 			color: gray;
 			height: 400px;
-			width: 20%;
 			margin-top: 200px;
 			text-align: center;
 		}
@@ -62,11 +62,14 @@
 
 		#computer {
 			font-size: 0.9em; 
+			margin-left: 10%;
 			color: gray;
+/*			text-align: center;*/
 			background-color: white;
-			border: 10px;
+			width: 100%;
+/*			border: 10px;
 			border-radius: 20px;
-			box-shadow: 10px;
+			box-shadow: 10px;*/
 		}
 		
 		div#instructionBox {

@@ -4,8 +4,10 @@
 
 var choiceTask = function() {
 	
+
+
 	var ready = function() {
-		var answer = confirm("Ready for Phase II?");
+		var answer = confirm("Ready for Phase IV?");
 		if (answer == true) {
 			$("body").focus().keydown(responseHandler); // turn on response handler
 			next();

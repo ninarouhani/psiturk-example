@@ -38,7 +38,9 @@ var rewardOrderPractice = [1,0,1,0,1,1,0,0,1,0];
 
 var zeroListening = false; // practice task
 var firstListening = false; // learning task
-var secondListening = false; // memory task
+var secondListening = false; // item memory task
+var secondListening2 = false; // item memory task
+var secondListeningseq = false; // sequence memory task
 var thirdListening = false; // decision task
 var cards = []; // array for cards
 var timeoutID; // for checking focus
@@ -49,15 +51,17 @@ var indoorPictures = ["Indoor_1.jpg","Indoor_2.jpg","Indoor_3.jpg","Indoor_4.jpg
 var outdoorPictures = ["Outdoor_1.jpg","Outdoor_2.jpg","Outdoor_3.jpg","Outdoor_4.jpg","Outdoor_5.jpg","Outdoor_6.jpg","Outdoor_7.jpg","Outdoor_8.jpg","Outdoor_9.jpg","Outdoor_10.jpg","Outdoor_11.jpg","Outdoor_12.jpg","Outdoor_13.jpg","Outdoor_14.jpg","Outdoor_15.jpg","Outdoor_16.jpg","Outdoor_17.jpg","Outdoor_18.jpg","Outdoor_19.jpg","Outdoor_20.jpg","Outdoor_21.jpg","Outdoor_22.jpg","Outdoor_23.jpg","Outdoor_24.jpg","Outdoor_25.jpg","Outdoor_26.jpg","Outdoor_27.jpg","Outdoor_28.jpg","Outdoor_29.jpg","Outdoor_30.jpg","Outdoor_31.jpg","Outdoor_32.jpg","Outdoor_33.jpg","Outdoor_34.jpg","Outdoor_35.jpg","Outdoor_36.jpg","Outdoor_37.jpg","Outdoor_38.jpg","Outdoor_39.jpg","Outdoor_40.jpg","Outdoor_41.jpg","Outdoor_42.jpg","Outdoor_43.jpg","Outdoor_44.jpg","Outdoor_45.jpg","Outdoor_46.jpg","Outdoor_47.jpg","Outdoor_48.jpg","Outdoor_49.jpg","Outdoor_50.jpg","Outdoor_51.jpg","Outdoor_52.jpg","Outdoor_53.jpg","Outdoor_54.jpg","Outdoor_55.jpg","Outdoor_56.jpg","Outdoor_57.jpg","Outdoor_58.jpg","Outdoor_59.jpg","Outdoor_60.jpg","Outdoor_61.jpg","Outdoor_62.jpg","Outdoor_63.jpg","Outdoor_64.jpg","Outdoor_65.jpg","Outdoor_66.jpg","Outdoor_67.jpg","Outdoor_68.jpg","Outdoor_69.jpg","Outdoor_70.jpg","Outdoor_71.jpg","Outdoor_72.jpg","Outdoor_73.jpg","Outdoor_74.jpg","Outdoor_75.jpg","Outdoor_76.jpg","Outdoor_77.jpg","Outdoor_78.jpg","Outdoor_79.jpg","Outdoor_80.jpg","Outdoor_81.jpg","Outdoor_82.jpg","Outdoor_83.jpg","Outdoor_84.jpg","Outdoor_85.jpg","Outdoor_86.jpg","Outdoor_87.jpg"];
 	outdoorPictures = _.shuffle(outdoorPictures);
 
-var rewardSequenceOutdoor1 = [1,1,1,1,1,1,1,1,10,10,10,10,10,10,10,10];
-var rewardSequenceIndoor1 = [5,5,5,5,5,5,5,5,2,2,2,2,2,2,2,2];
+var rewardSequenceOutdoor1 = [30,50,20,60,50,20,30,60,40,80,20,100,80,20,40,100];
+var rewardSequenceIndoor1 = [40,70,50,40,80,70,50,80,20,80,60,0,80,20,0,60];
 
-var rewardSequenceOutdoor2 = [2,2,2,2,2,2,2,2,5,5,5,5,5,5,5,5];
-var rewardSequenceIndoor2 = [10,10,10,10,10,10,10,10,1,1,1,1,1,1,1,1];
+var rewardSequenceOutdoor2 = [20,80,60,0,80,20,0,60,40,70,50,40,80,70,50,80];
+var rewardSequenceIndoor2 = [40,80,20,100,80,20,40,100,30,50,20,60,50,20,30,60];
 
 var locationOrder = [1,1,0,1,0,1,0,0,1,1,0,1,0,0,1,0,1,1,0,0,1,0,1,1,0,0,1,0,1,1,0,0];
 var rewardOrder = [0,1,0,1,0,0,1,1,0,1,1,0,0,1,0,1,0,1,1,0,0,1,1,0,1,0,1,0,0,1,0,1];
 var computerPick = [0,1,1,1,1,0,0,0,0,1,0,0,1,0,0,0,0,1,0,1,0,0,1,0,0,1,1,1,0,1,1,0,];
+
+var sequenceChance; 
 
 // card object to store UX
 function Card(reward, chosen, unchosen) {
@@ -65,6 +69,10 @@ function Card(reward, chosen, unchosen) {
 	this.chosen = chosen;
 	this.unchosen = unchosen;
 }
+
+var chosen = []; // computer chosen
+var unchosen = []; // computer not chosen (but shown)
+var lowriskfirst;
 
 // hide function
 var hideCard = function(n) {
@@ -79,11 +87,17 @@ var showCard = function(n) {
 function Room() {
 }
 
+function learningTask() {
+}
+
+function memoryTask() {
+}
+
 /***********
 * PHASE 0  *
 ************/
 var practiceTask = function() {
-
+	$("#memoryPicture").hide();
 	var startTime; // time of presentation for RT calculations
 
 	// randomize indoor and outdoor image placement
@@ -192,7 +206,7 @@ var practiceTask = function() {
 				practiceoutdoorCount++;
 			}
 
-			$(".reward").text("$" + reward);
+			$(".reward").text(reward + "¢");
 		
 			// ***insert psiTurk syntax around here***
 			
@@ -238,7 +252,7 @@ var practiceTask = function() {
 	var practiceoutdoorCount = 0;
 	
 	// document.body.style.backgroundColor = currentRoom.background; // alternative method
-	$("body").css('background-image', 'url(static/images/Gray.jpg)'); // jQuery method
+	$("body").css('background-color', "gray"); // jQuery method
 
 	// non-randomized image placement
 	var locationChance;

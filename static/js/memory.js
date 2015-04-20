@@ -4,43 +4,70 @@
 
 memoryTask = function() {
 	
-	// assuming indoor/outdoor are sampled from equally...
-	// var oldIndoor = indoorPictures.slice(0, (learningTask.totalTrials / 2));
-	var newIndoor = indoorPictures.slice(33);
-	// var oldOutdoor = outdoorPictures.slice(0, (learningTask.totalTrials / 2));
-	var newOutdoor = outdoorPictures.slice(33);
+	var newIndoor = indoorPictures.slice(32);
+	var newOutdoor = outdoorPictures.slice(32);
 
 	var chosen = []; // computer chosen
 	var unchosen = []; // computer not chosen (but shown)
 	var foils = newIndoor.concat(newOutdoor); // participant has never seen
-	console.log(chosen);
-	console.log(unchosen); 
-	console.log(foils);
+		foils = _.shuffle(foils);
 
-
-var timeLimit = 3000;
-
-	console.log(cards);
 	// keep track of how many shown in block
 	var chosenCount = 0;
 	var unchosenCount = 0;
 	var foilCount = 0;
-	
+	var memoryTrialTotalCount = 0;
+
+	var timeLimit = 3000;
+
 	for (var i = 0; i < cards.length; i++) {
-		chosen[i] = cards[i].picture;
+		chosen[i] = cards[i].chosen;
 		unchosen[i] = cards[i].unchosen;
 	}
 	
-	function SequentialBlock(first, after) {
-		this.first = first;
-		this.after = after;
-	}
+	var chosenitem = [];
+	var unchosenitem = []; 
+	var sequenceitem1 = [];
+	var sequenceitem2 = [];
+
+	var chosenitem = [chosen[0],chosen[2],chosen[4],chosen[6],chosen[8],chosen[10],chosen[12],chosen[14],chosen[16],chosen[18],chosen[20],chosen[22],chosen[24],chosen[26],chosen[28],chosen[30]];
+		chosenitem = _.shuffle(chosenitem);
+
+	var unchosenitem = [unchosen[0],unchosen[3],unchosen[6],unchosen[9],unchosen[12],unchosen[15],unchosen[18],unchosen[21],unchosen[24],unchosen[27],unchosen[29],unchosen[31]];
+		unchosenitem = _.shuffle(unchosenitem);
+
+	var memoryorder = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2];
+		memoryorder = _.shuffle(memoryorder);
+
+	var sequenceitem1 = [chosen[1],chosen[3],chosen[5],chosen[7],chosen[9],chosen[11],chosen[13],chosen[15]];
+		sequenceitem1 = _.shuffle(sequenceitem1);
+
+	var sequenceitem2 = [chosen[17],chosen[19],chosen[21],chosen[23],chosen[25],chosen[27],chosen[29],chosen[31]];
+		sequenceitem2 = _.shuffle(sequenceitem2);
+
+	var sequenceorder = [1,1,1,1,0,0,0,0];
+		sequenceorder = _.shuffle(sequenceorder);	
+
+	var preferenceleft = [];
+	var preferenceright = [];
+
+	// var memoryreward = function() {
+		
+	// 	if (sequenceChance < 0.5) { //lowriskfirst 
+	// 		preferenceleft = [chosen[7],chosen[]];
+	// 		preferenceright = [chosen[1],chosen[]];
+	// 	}
+	// 	else {
+	// 		preferenceleft = [];
+	// 		preferenceright = [];
+	// 	}
+	// }
 	
 	var startTime; // time of presentation for RT calculations
 	
 	// item memory task
 	var itemMemory = function() {
-		
+
 		var ready = function() {
 			var answer = confirm("Ready for Phase II?");
 			if (answer == true) {
@@ -60,12 +87,12 @@ var timeLimit = 3000;
 
 			switch (keyCode) {
 			// "y"
-			case 89:
-				response = "yes";
+			case 78:
+				response = "new";
 				break;
 			// "n"
-			case 78:
-				response = "no"
+			case 79:
+				response = "old"
 				break;
 			default:
 				response = "";
@@ -74,40 +101,25 @@ var timeLimit = 3000;
 
 			if (response != "") {
 				secondListening = false;
+				// secondListening2 = true;
+				// (!secondListening2) return;
 				
 				window.clearTimeout(timeoutID);
 				
-				// hide
-				$(".memory").hide();
-				
-				// confidence rating
-				var confidence = prompt("On scale from 1 to 10, how confident are you in your judgment?");
-				
-				// increment counters
-				memoryTrialTotalCount++;
-				
 				setTimeout(function() {
-					if (memoryTrialTotalCount == (totalTrials / 2)) {
-						alert("INSTRUCTION!");
-					}
-					// check if task is done
-					if (memoryTrialTotalCount == totalTrials) {
-						finish();
-					}
-					else {
-						imageSelection();
-						next();
-					}
+
+				next2();
+					
 				}, delayTime);
 			}
 		}
 		
 		var next = function() {
-			$("#memoryPicture").attr("src", + currentImage);
+			$("#memoryPicture").attr("src", "static/images/" + currentImage);
 			$("#memoryPicture").show();
 
 			// show familiar
-			$("#memoryQuestion").text("Press \'y\' if this image is new, \'n\' if this image is old");
+			$("#memoryQuestion").text("\'n\' if new, \'o\' if old.");
 			$("#memoryQuestion").show();
 			
 			startTime = new Date().getTime();
@@ -119,54 +131,105 @@ var timeLimit = 3000;
 			}
 			timeoutID = window.setTimeout(slowAlert, timeLimit);
 		}
+
+		var responseHandler2 = function(key) {
+			if (!secondListening2) return;
+			
+			var keyCode = key.keyCode;
+			var response;
+
+			switch (keyCode) {
+			// 1
+			case 49:
+				response = "1";
+				break;
+			// 2
+			case 50:
+				response = "2"
+				break;
+			// 3
+			case 51:
+				response = "3";
+				break;
+			// 4
+			case 52:
+				response = "4";
+				break;
+
+			default:
+				response = "";
+				break;
+			}
+
+			if (response != "") {
+				secondListening2 = false;
+				// (!secondListening2) return;
+				
+				window.clearTimeout(timeoutID);
+
+				// // increment counters
+				memoryTrialTotalCount++;
+				
+				setTimeout(function() {
+					if (memoryTrialTotalCount == itemtotalTrials) {
+						finish();
+					}
+					else {
+						imageSelection();
+						next();
+					}
+				}, delayTime);
+			}
+		}
+
+		var next2 = function() {
+
+			// show confidence
+				$("#memoryQuestion").hide();
+				$("#memoryQuestion").text("(1) completely certain, (2) very sure, (3) pretty sure, (4) guessing");
+				$("#memoryQuestion").show();
+			
+			startTime = new Date().getTime();
+			$("body").focus().keydown(responseHandler2);
+			secondListening2 = true;
+			
+			// make sure participant doesn't take too long
+			function slowAlert() {
+				alert("Please focus on this task!");
+			}
+			timeoutID = window.setTimeout(slowAlert, timeLimit);
+		}
 		
 		var imageSelection = function() {
-			var rand = _.random(0, 2);
 			
 			// chosen
-			if (rand == 0) {
-				if (chosenCount == maxChosen) {
-					imageSelection();
-				}
-				else {
-					currentImage = chosen[chosenCount];
+				if (memoryorder[memoryTrialTotalCount] == 0) {
+					currentImage = chosenitem[chosenCount];
 					chosenCount++;
-				}
-			}
+				}		
 			
 			// unchosen
-			else if (rand == 1) {
-				if (unchosenCount == maxUnchosen) {
-					imageSelection();
-				}
-				else {
-					currentImage = unchosen[unchosenCount];
+				else if (memoryorder[memoryTrialTotalCount] == 1) {
+					currentImage = unchosenitem[unchosenCount];
 					unchosenCount++;
 				}
-			}
 			
 			// foil
-			else if (rand == 2) {
-				if (foilCount == maxFoils) {
-					imageSelection();
-				}
-				else {
+				else if (memoryorder[memoryTrialTotalCount] == 2) {
 					currentImage = foils[foilCount];
 					foilCount++;
 				}
-			}
 		}
 		
 		var finish = function() {
-			$(".memory").hide();
+			$("#memoryPicture").hide();
+			$("#memoryQuestion").hide();
 			$("body").unbind("keydown", responseHandler);
 			sequenceMemory();
 		}
 		
 		// constants
-		// this.totalRooms = 2;
-		this.totalTrials = 32;
-		// this.trialsPerRoom = totalTrials / totalRooms;
+		itemtotalTrials = 56;
 		this.delayTime = 10;
 		var maxChosen = 16;
 		var maxUnchosen = 12;
@@ -174,29 +237,50 @@ var timeLimit = 3000;
 		var currentImage;
 		imageSelection();
 		
-		this.memoryTrialTotalCount = 0;
-		// this.roomCount = 0;
-		
+		// memoryorder();
 		ready();
 	}
 	
+
 	// sequence memory task
 	var sequenceMemory = function() {
 		console.log("Sequence Memory!");
+		var sequenceTrialTotalCount = 0;
 		
-		var ready = function() {
+		var ready2 = function() {
 			var answer = confirm("Ready for Phase III?");
 			if (answer == true) {
 				$("body").focus().keydown(responseHandler); // turn on response handler
-				next();
+				randomSequence();
+				next3();
 			}
 			if (answer == false) {
-				ready();
+				ready2();
 			}
 		}
-		
+	
+		var randomSequence = function() {
+
+			if (sequenceorder[sequenceTrialTotalCount] == 1) {
+				sequenceimage1 = sequenceitem1[sequenceroom1count];
+				sequenceimage2 = sequenceitem1[sequenceroom1count+1]; 
+				$("#pic1").attr("src", "static/images/" + sequenceimage1);
+				$("#pic2").attr("src", "static/images/" + sequenceimage2);
+				sequenceroom1count+=2;
+			}	
+
+			// 1 is outdoor, 2 is indoor
+			else {
+				sequenceimage1 = sequenceitem2[sequenceroom2count];
+				sequenceimage2 = sequenceitem2[sequenceroom2count+1]; 
+				$("#pic1").attr("src", "static/images/" + sequenceimage1);
+				$("#pic2").attr("src", "static/images/" + sequenceimage2);
+				sequenceroom2count+=2;
+			}
+		}
+
 		var responseHandler  = function(key) {
-			if (!secondListening) return;
+			if (!secondListeningseq) return;
 
 			var keyCode = key.keyCode;
 			var response, first, after;
@@ -204,30 +288,11 @@ var timeLimit = 3000;
 			switch (keyCode) {
 			// "1"
 			case 49:
-				// differentiate selected
-				if (locationChance < 0.5) {
-					first = currentBlock.first;
-					after = currentBlock.after;
-				}
-				else {
-					first = currentBlock.after;
-					after = currentBlock.first;
-				}
+				response = "left first";
 				break;
-				
-			// "2"
 			case 50:
-				// differentiate selected
-				if (locationChance < 0.5) {
-					first = currentBlock.after;
-					after = currentBlock.first;
-				}
-				else {
-					first = currentBlock.first;
-					after = currentBlock.after;
-				}
+				response = "right first";
 				break;
-
 			default:
 				response = "";
 				break;
@@ -239,40 +304,37 @@ var timeLimit = 3000;
 				window.clearTimeout(timeoutID);
 				
 				// hide
-				$("#sequencePic1").hide();
-				$("#sequencePic2").hide();
-				$("#sequenceQuestion").hide();
+				$("#pic1").hide();
+				$("#pic2").hide();
+				$("#memoryQuestion").hide();
+				$("#computer").hide();
 				
 				// increment counters
 				sequenceTrialTotalCount++;
-				currentBlock = chosenSplice[sequenceTrialTotalCount];
 				
 				setTimeout(function() {
-					if (sequenceTrialTotalCount == (this.totalTrials / 2)) {
-						alert("INSTRUCTION!");
-					}
 					// check if task is done
-					if (sequenceTrialTotalCount == this.totalTrials) {
+					if (sequenceTrialTotalCount == seqtotalTrials) {
 						finish();
 					}
 					else {
-						randomLocation();
-						next();
+						randomSequence();
+						next3();
 					}
 				}, delayTime);
 			}
 		}
 		
-		var next = function() {
-			$("#sequencePic1").show();
-			$("#sequencePic2").show();
+		var next3 = function() {
+			$("#pic1").show();
+			$("#pic2").show();
 			
 			// show sequence
-			$("#sequenceQuestion").text("Press \'1\' if the left image came first, \'2\' if the right image came first");
-			$("#sequenceQuestion").show();
+			$("#computer").text("Press \'1\' if the left image came first, \'2\' if the right image came first.");
+			$("#computer").show();
 			
 			startTime = new Date().getTime();
-			secondListening = true;
+			secondListeningseq = true;
 			
 			// make sure participant doesn't take too long
 			function slowAlert() {
@@ -282,77 +344,27 @@ var timeLimit = 3000;
 		}
 		
 		var finish = function() {	
-			$(".sequence").hide();
+			$(".deck").hide();
 			$("body").unbind("keydown", responseHandler);
 			console.log("READY FOR 3???")
-		}
-		
-		var randomLocation = function() {
-			locationChance = Math.random();
-		
-			// 1 is indoor, 2 is outdoor
-			if (locationChance < 0.5) {
-				$("#sequencePic1").attr("src", + currentBlock.first);
-				$("#sequencePic2").attr("src", + currentBlock.after);
-			}	
-
-			// 1 is outdoor, 2 is indoor
-			else {
-				$("#sequencePic1").attr("src", + currentBlock.after);
-				$("#sequencePic2").attr("src", + currentBlock.first);
-			}
-			
-			return locationChance;
+			choiceTask();
 		}
 		
 		// constants
-		// this.totalRooms = 2;
-		this.totalTrials = 8; // (2 per room)
-		this.trialsPerRoom = totalTrials / totalRooms;
+		seqtotalTrials = 8; // (2 per room)
 		this.delayTime = 10;
 		
-		var sequenceTrialTotalCount = 0;
-		
-		var currentBlock = chosenSplice[sequenceTrialTotalCount];
-		
-		var locationChance = randomLocation();
-		
-		ready();
-	}
-	
-	// because I can't figure out how to access this variable...
-	var sequenceTotalTrials = 8;
-	
-	// pick out sequence
-	var chosenSplice = [];
-	// splice low (first room)
-	for (var i = 0; i < (sequenceTotalTrials / 2); i++) {
-		var randLo = _.random(0, ((chosen.length / 2) - 2));
-		var afterRand = _.random(randLo, ((chosen.length / 2) - 1));
-		var afterChosen = chosen.splice(afterRand + 1, 1);
-		var firstChosen = chosen.splice(randLo, 1);
-		var tempBlock = new SequentialBlock(firstChosen, afterChosen);
-		chosenSplice[i] = tempBlock;
-	}
-	var decrementingCounter = sequenceTotalTrials / 2;
-	// splice high (second room)
-	for (var i = (sequenceTotalTrials / 2); i < sequenceTotalTrials; i++) {
-		var randHi = _.random(((chosen.length / 2) + decrementingCounter), chosen.length - 2);
-		var afterRand = _.random(randHi + 1, chosen.length - 1);
-		var afterChosen = chosen.splice(afterRand, 1);
-		var firstChosen = chosen.splice(randHi, 1);
-		var tempBlock = new SequentialBlock(firstChosen, afterChosen);
-		chosenSplice[i] = tempBlock;
-		decrementingCounter--;
-	}
 
-	
-	chosen = _.shuffle(chosen);
-	unchosen = _.shuffle(unchosen);
-	foils = _.shuffle(foils);
+		var sequenceroom1count= 0;
+		var sequenceroom2count= 0;
+		var sequenceimage1;
+		var sequenceimage2;
+
+		ready2();
+	}
 	
 	// constants
-	var totalTrials = 48;
-	
+	var totalTrials = 64;
+
 	itemMemory();
 }

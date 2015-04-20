@@ -9,7 +9,7 @@ learningTask = function() {
 	// randomize indoor and outdoor image placement
 	var randomLocation = function() {
 		// (for convenience)
-		
+	
 		// 1 is indoor, 2 is outdoor
 		if (locationOrder[learningTrialTotalCount] == 1) {
 			item1pic = indoorPictures[learningTrialTotalCount];
@@ -32,6 +32,7 @@ learningTask = function() {
 
 		sequenceChance = Math.random();
 		
+
 		// low risk first, high risk second
 		if (sequenceChance < 0.5) {
 			rewardSequenceOutdoor= rewardSequenceOutdoor1;
@@ -43,8 +44,10 @@ learningTask = function() {
 			rewardSequenceOutdoor = rewardSequenceOutdoor2;
 			rewardSequenceIndoor = rewardSequenceIndoor2;
 		}
+		return sequenceChance;
+			console.log(sequenceChance);
 	}
-
+	
 	var ready = function() {
 		var answer = confirm("Ready?");
 		if (answer == true) {
@@ -78,9 +81,9 @@ learningTask = function() {
 			
 			window.clearTimeout(timeoutID);
 			
-			// save items for future reference
-			var card = new Card(reward, chosen, unchosen);
-			cards[learningTrialTotalCount] = card;
+			// // save items for future reference
+			// var card = new Card(reward, chosen, unchosen);
+			// cards[learningTrialTotalCount] = card;
 
 			// hide cards
 			hideCard(locationOrder[learningTrialTotalCount]);
@@ -120,7 +123,7 @@ learningTask = function() {
 		}
 	}
 
-	next = function () {
+	var next = function () {
 		setTimeout(function() {
 
 			// show correct card
@@ -148,10 +151,9 @@ learningTask = function() {
 		
 			card = new Card(reward, chosen, unchosen);
 			cards[learningTrialTotalCount] = card;
-			console.log(Card);
 
 			// show reward
-			$(".reward").text("$" + reward);
+			$(".reward").text(reward + "¢");
 
 			// ***insert psiTurk syntax around here***
 			
@@ -170,24 +172,34 @@ learningTask = function() {
 	
 	// next room
 	var nextRoom = function() {
+		hideCard(1);
+		hideCard(2);
+		$(".reward").hide();
+		// set background to white
+		$("body").css('background-color', "white");
+		$("body").css('background-image', "");
+		judgment = prompt("Did indoor or outdoor pictures have higher value?");
+		showCard(1);
+		showCard(2);		
 		learningTrialCount = 0;
 		roomCount++;
+
 	}
 	
 	// finish phase I
-	var finish = function() {
+	var finish = function() {   
 		firstListening = false;
 		// hide everything
 		hideCard(1);
 		hideCard(2);
-		// $("#computer").hide();
 		$(".reward").hide();
 		// set background to white
 		$("body").css('background-color', "white");
 		$("body").css('background-image', "");
 		// stop accepting key presses
 		$("body").unbind("keydown", responseHandler);
-		// initiate second task
+		// // initiate second task
+		judgment;
 		memoryTask();
 	}
 	
@@ -234,7 +246,7 @@ learningTask = function() {
 
 	// randomize first image placement
 	var locationChance;
-	var randomSequence;
+	sequenceChance;  
 
 	var showPage = function() {
 		psiTurk.showPage("stage.html");
@@ -242,6 +254,7 @@ learningTask = function() {
 		sequenceChance = randomSequence();
 		$("body").hide();
 		$(".reward").hide();
+		console.log(sequenceChance);
 	}
 	
 	showPage();
