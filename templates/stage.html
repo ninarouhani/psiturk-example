@@ -1,90 +1,67 @@
 	<div class="deck" id="one"><div id="reward1" class="reward"></div><img id="pic1" class="item"/></div>
 	<div class="deck" id="two"><div id="reward2" class="reward"></div><img id="pic2" class="item"/></div>
-	<div id="middleBox"><img id="memoryPicture"/><p id="memoryQuestion"></p><p id="computer"></p></div>
-	
+	<div id="middle"><img id="memoryPicture"/><p id="memoryQuestion"></p></div>
+	<div id="sequenceQuestion"></div>
 	<style type="text/css">
-		div.deck {
-			display: inline-block;
+		body {
+			max-width: 1024px;
+			max-height: 768px;
+		}
+		
+		div {
 			position: absolute;
-			height: 400px;
-			margin-top: 100px;
-			padding-top: 100px;
+			display: inline-block;
 			text-align: center;
-			font-size: 2.5em;
+		}
+		
+		div.deck {
+			margin-top: 254px;
+		}
+		
+		div.reward {
+			margin-top: -55px;
+			width: 100%;
+			font-size: 38px; 
+			color: green;
+			background-color: white;
 		}
 		
 		img.item {
-			max-height: 300px;
-			max-width: 100%;
-			border: 10px solid #FFFF66;
-		}
-		
-		img#memoryPicture {
-			max-height: 300px;
-			max-width: 300px;
-			text-align: center;
-		}
-		
-		p#memoryQuestion {
-			font-size: 0.75em;
-			text-align: center;
+			max-width: 250px;
+			border: 5px solid #FFFF66;
 		}
 		
 		div#one {
-			margin-left: 15%;
+			margin-left: 60px;
 		}
 		
 		div#two {
-			margin-left: 65%;
+			margin-left: 704px;
 		}
 
-		div#middleBox {
-			position: absolute;
-			display: inline-block;
-			margin-left: 40%;
-			margin-right: 40%;
-			font-size: 2em;
+		div#middle {
+			width: 250px;
+			margin-top: 225px;
+			margin-left: 387px;
+			font-size: 24px;
 			color: gray;
-			height: 400px;
-			margin-top: 200px;
+		}
+		
+		img#memoryPicture {
+			width: 250px;
+		}
+		
+		p#memoryQuestion {
+			margin-top: 5px;
+			font-size: 24px;
 			text-align: center;
 		}
 		
-		.reward {
-			position: absolute;
-			margin-top: -100px;
-			width: 100%;
-			font-size: 1.5em; 
-			color: green;
-			background-color: white;
-			border-radius: 20px;
-		}
-
-		#computer {
-			font-size: 0.9em; 
-			margin-left: 10%;
-			color: gray;
-/*			text-align: center;*/
-			background-color: white;
-			width: 100%;
-/*			border: 10px;
-			border-radius: 20px;
-			box-shadow: 10px;*/
-		}
-		
-		div#instructionBox {
-			position: absolute;
-			width: 100%;
-			text-align: center;
-			margin-top: 550px;
-			font-size: 2em;
+		div#sequenceQuestion {
+			margin-top: 304px;
+			margin-left: 362px;
+			width: 300px;
+			font-size: 24px; 
 			color: gray;
 		}
-		
-		span#instruction {
-			background-color: white;
-			padding: 10px;
-			border-radius: 20px;
-		}
-
 	</style>

@@ -330,8 +330,8 @@ memoryTask = function() {
 			$("#pic2").show();
 			
 			// show sequence
-			$("#computer").text("Press \'1\' if the left image came first, \'2\' if the right image came first.");
-			$("#computer").show();
+			$("#sequenceQuestion").text("Press \'1\' if the left image came first, \'2\' if the right image came first.");
+			$("#sequenceQuestion").show();
 			
 			startTime = new Date().getTime();
 			secondListeningseq = true;
@@ -345,6 +345,7 @@ memoryTask = function() {
 		
 		var finish = function() {	
 			$(".deck").hide();
+			$("#sequenceQuestion").hide();
 			$("body").unbind("keydown", responseHandler);
 			console.log("READY FOR 3???")
 			choiceTask();
